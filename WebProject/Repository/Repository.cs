@@ -14,11 +14,18 @@ namespace WebProject.Repository
         public IEnumerable<Animal> GetAnimals() => _zooContext.Animals!;
         public IEnumerable<Category> GetCategories() => _zooContext.Categories!;
         public IEnumerable<Comment> GetComments() => _zooContext.Comments!;
-
         public List<Category> GetAllData()
         {
             var data = _zooContext.Categories!.Include(categorty => categorty.Animals!).ThenInclude(comment => comment.Comments!).ToList();
             return data;
+        }
+        public IEnumerable<Animal> Top2Aniamls()
+        {
+            var animals = _zooContext.Animals!
+                .OrderByDescending(a => a.Comments!.Count)
+                .Take(2)
+                .ToList();
+            return animals;
         }
     }
 }
