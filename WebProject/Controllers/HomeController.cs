@@ -12,8 +12,16 @@ namespace WebProject.Controllers
         }
         public IActionResult Index()
         {
-            var data = _repository.GetAllData();
-            return View(data);
+            var topTwoAnimals = _repository.Top2Aniamls();
+            return View(topTwoAnimals);
+        }
+        public IActionResult Catalog()
+        {
+            return View();
+        }
+        public IActionResult Administrator()
+        {
+            return View();
         }
     }
 }

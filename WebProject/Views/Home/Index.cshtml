@@ -1,39 +1,24 @@
-﻿
+﻿@model IEnumerable<WebProject.Models.Animal>
+
 @{
-    View.Title = "Home";
+    ViewBag.Title = "Home";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Home</title>
-    <link rel="stylesheet" href="~/CSS/Style.css" />
-</head>
-<body>
-    <header>
-        <div class="headerContainer">
-            <img src="~/images/ZooIcon.png" />
-            <div><h1>Welcome to my ZOO!</h1></div>
-        </div>
-    </header>
-    <main>
-        <div class="mainContainer">
-            <section>
-                <div class="nav">
-                    <ul>
-                        <li><a class="active" href="">Home</a></li>
-                        <li><a href="">Catalog</a></li>
-                        <li><a href="">Administrator</a></li>
-                    </ul>
+<h2 class="popularhead" style="color:white;">Our two most popular animals:</h2>
+@foreach(var a in Model)
+{
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@a.PictureName" class="img-fluid rounded-start animalPhoto" alt="AnimalPhoto">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@a.Name</h5>
+                    <p class="card-text">@a.Description</p>
+                    <p class="card-text"><small class="text-body-secondary">Number of comments: @a.Comments!.Count</small></p>
                 </div>
-            </section>
-            <div class="mainContent"></div>
+            </div>
         </div>
-    </main>
-    <footer>
-        <div class="footerContainer"></div>
-    </footer>
-</body>
-</html>
+    </div>
+}

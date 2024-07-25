@@ -8,5 +8,6 @@ namespace WebProject.Repository
         IEnumerable<Comment> GetComments();
         IEnumerable<Animal> GetAnimals();
         List<Category> GetAllData();
+        IEnumerable<Animal> Top2Aniamls();
     }
 }
