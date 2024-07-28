@@ -1,7 +1,12 @@
 ﻿body {
-    font-size: 1.5rem;
-    background: #212529;
+    font-size: 1rem;
+    background-color: #212529;
     margin: 0;
+    color:white;
+}
+
+header{
+    font-size:2rem;
 }
 
 .logo{
@@ -9,21 +14,37 @@
 }
 
 .animalPhoto{
-    width: 700px;
-    height: 400px;
+    width: 500px;
+    height: 275px;
 }
 
-.card.mb-3{
-    width: 80vw;
+.card {
+    background: #adc0de;
+    box-shadow: 5px 5px 10px 5px #2f5aa1;
+}
+
+#formCategory{
+    margin:30px 0 0 0;
+}
+
+#catalogContent {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.card-img-top{
+    width:286px;
+    height:184px;
 }
 
 .row.g-0 {
     background: #adc0de;
-    box-shadow: 5px  5px 10px 5px #2f5aa1
+    box-shadow: 5px 5px 10px 5px #2f5aa1
 }
 
 .mainContent {
-    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,4 +59,8 @@
     font-size: 4rem;
     text-shadow: 5px 5px #2f5aa1;
     padding: 10px;
+}
+
+select{
+    max-width: 400px;
 }

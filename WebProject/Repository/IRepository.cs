@@ -7,6 +7,7 @@ namespace WebProject.Repository
         IEnumerable<Category> GetCategories();
         IEnumerable<Comment> GetComments();
         IEnumerable<Animal> GetAnimals();
+        IEnumerable<Animal> GetAnimals(string category);
         List<Category> GetAllData();
         IEnumerable<Animal> Top2Aniamls();
     }
