@@ -9,6 +9,12 @@ builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 builder.Services.AddTransient<IRepository,Repository>(); // adding the Repository service
 
 var app = builder.Build();
+
+if(app.Environment.IsStaging() || app.Environment.IsProduction())
+{
+    app.UseExceptionHandler("/Error/Index");
+}
+
 app.UseStaticFiles(); // For enabling local images
 
 using(var scope = app.Services.CreateScope()) // Reseting the db and filling it up again

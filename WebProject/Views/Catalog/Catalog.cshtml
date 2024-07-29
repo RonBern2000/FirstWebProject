@@ -11,16 +11,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-                <a class="navbar-brand col-lg-3 me-0" href="#"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a>
+                <a class="navbar-brand col-lg-3 me-0" asp-controller="Home" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a>
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Index" onclick="navItemActive(this)">Home</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index" onclick="navItemActive(this)">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Catalog" onclick="navItemActive(this)">Catalog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Administrator" onclick="navItemActive(this)">Administrator</a>
+                        <a class="nav-link" asp-controller="Administrator" asp-action="Administrator" onclick="navItemActive(this)">Administrator</a>
                     </li>
                 </ul>
             </div>
@@ -29,7 +29,7 @@
 }
 
 <div id="formCategory" style="margin:30px 0 0 0;width: 300px">
-    @using (Html.BeginForm("RedirectToCatalog", "Home", FormMethod.Post))
+    @using (Html.BeginForm("RedirectToCatalog", "Catalog", FormMethod.Post))
     {
         @Html.DropDownList("category", ViewBag.Categories, "Select Category", new { @class = "form-control" })
         <input type="submit" value="Submit" class="btn btn-primary" />

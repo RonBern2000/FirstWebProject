@@ -13,7 +13,7 @@
 <body>
 
      <header>
-        @RenderSection("headerSection")
+        @RenderSection("headerSection") @* A must implement Section*@
      </header>
 
     <main>
@@ -24,7 +24,7 @@
 
     <footer >
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a asp-action="Index" class="nav-link px-2 ">Home</a></li>
+                <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link px-2 ">Home</a></li>
             <li class="nav-item"><a href="https://www.google.com/maps/place/Love+Hill+Park/" target="_blank" class="nav-link px-2 ">Location</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 ">About</a></li>
             </ul>

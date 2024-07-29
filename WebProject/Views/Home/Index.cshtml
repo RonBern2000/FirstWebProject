@@ -11,16 +11,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-                <a class="navbar-brand col-lg-3 me-0" href="#"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a>
+                <a class="navbar-brand col-lg-3 me-0" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a>
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
                     <li class="nav-item">
                         <a class="nav-link active" asp-action="Index" onclick="navItemActive(this)">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Catalog" onclick="navItemActive(this)">Catalog</a>
+                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" onclick="navItemActive(this)">Catalog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Administrator" onclick="navItemActive(this)">Administrator</a>
+                        <a class="nav-link" asp-controller="Administrator" asp-action="Administrator" onclick="navItemActive(this)">Administrator</a>
                     </li>
                 </ul>
             </div>
