@@ -8,6 +8,8 @@ builder.Services.AddDbContext<ZooContext>(options => options.UseLazyLoadingProxi
 builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 builder.Services.AddTransient<IRepository,Repository>(); // adding the Repository service
 
+//Need to add the logs config
+
 var app = builder.Build();
 
 if(app.Environment.IsStaging() || app.Environment.IsProduction())

@@ -27,11 +27,11 @@ namespace WebProject.Repository
                 .ToList();
             return animals;
         }
-
         IEnumerable<Animal> IRepository.GetAnimals(string category)
         {
             var animals = _zooContext.Animals!.Where(a => a.Category!.Name == category);
             return animals;
         }
+        public Animal GetAnimal(int id) => _zooContext.Animals!.Single(a => a.AnimalId == id);
     }
 }

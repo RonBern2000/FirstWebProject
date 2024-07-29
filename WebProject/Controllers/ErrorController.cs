@@ -4,7 +4,7 @@ namespace WebProject.Controllers
 {
     public class ErrorController : Controller
     {
-        public IActionResult Index()
+        public IActionResult ErrorPage()
         {
             return View();
         }

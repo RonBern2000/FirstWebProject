@@ -1,0 +1,69 @@
+﻿@model WebProject.Models.Animal
+
+@{
+    ViewBag.Title = "AnimalDetails";
+}
+@section headerSection {
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary " data-bs-theme="dark" aria-label="Thirteenth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+                <a class="navbar-brand col-lg-3 me-0" asp-controller="Home" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a>
+                <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-action="Catalog">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Administrator" asp-action="Administrator">Administrator</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+
+<div class="container" style="margin: 40px;">
+    <div class="row">
+        <div class="col-8">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-3">
+                        <img src="@Model.PictureName" class="img-fluid rounded-start animalPhoto" alt="AnimalPhoto">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Name</h5>
+                            <p class="card-text">@Model.Description</p>
+                            <p class="card-text">Age: @Model.Age</p>
+                            <p class="card-text">Category Name: @Model.Category!.Name</p>
+                            <p class="card-text"><small class="text-body-secondary">Number of comments: @Model.Comments!.Count</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            @foreach(var c in Model.Comments!)
+            {
+                <p>@c.CommentText</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <form action="/" method="post">
+            <div class="col-8">
+                @*Btn to Create a new comment*@
+                <input class="btn btn-primary" type="submit" value="Create a new comment"/>
+            </div>
+            <div class="col-4">
+                @*Input with validation: client side and server side*@
+            </div>
+        </form>
+    </div>
+</div>
+    

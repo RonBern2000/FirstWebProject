@@ -32,5 +32,12 @@ namespace WebProject.Controllers
         {
             return RedirectToAction("Catalog", new { category = category });
         }
+
+        [HttpGet]
+        public IActionResult AnimalDetails(int id) 
+        {
+            var animal = _repository.GetAnimal(id);
+            return View(animal);
+        }
     }
 }
