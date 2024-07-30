@@ -11,6 +11,7 @@ namespace WebProject.Repository
         {
             _zooContext = zooContext;
         }
+        public void SaveChanges() => _zooContext.SaveChanges();
         public IEnumerable<Animal> GetAnimals() => _zooContext.Animals!;
         public IEnumerable<Category> GetCategories() => _zooContext.Categories!;
         public IEnumerable<Comment> GetComments() => _zooContext.Comments!;

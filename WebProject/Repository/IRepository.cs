@@ -4,6 +4,7 @@ namespace WebProject.Repository
 {
     public interface IRepository
     {
+        public void SaveChanges();
         IEnumerable<Category> GetCategories();
         IEnumerable<Comment> GetComments();
         IEnumerable<Animal> GetAnimals();

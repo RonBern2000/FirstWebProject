@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="commentsBox col-4">
             @foreach(var c in Model.Comments!)
             {
                 <p>@c.CommentText</p>
@@ -55,13 +55,15 @@
         </div>
     </div>
     <div class="row">
-        <form action="/" method="post">
-            <div class="col-8">
-                @*Btn to Create a new comment*@
-                <input class="btn btn-primary" type="submit" value="Create a new comment"/>
+        <form asp-action="CreateComment" method="post">
+            <input type="hidden" asp-for="@Model.AnimalId" />
+            <div class="form-group">
+                <label asp-for="CommentText" class="control-label"></label>
+                <textarea asp-for="CommentText" class="form-control"></textarea>
+                <span asp-validation-for="CommentText" class="text-danger"></span>
             </div>
-            <div class="col-4">
-                @*Input with validation: client side and server side*@
+            <div class="form-group">
+                <input type="submit" value="Create a new comment" class="btn btn-primary" />
             </div>
         </form>
     </div>

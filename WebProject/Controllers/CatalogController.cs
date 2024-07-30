@@ -13,7 +13,6 @@ namespace WebProject.Controllers
         {
             _repository = repository;
         }
-
         [HttpGet]
         public IActionResult Catalog(string category)
         {
@@ -36,8 +35,17 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult AnimalDetails(int id) 
         {
+            ViewBag.CommentModel = new Comment();
             var animal = _repository.GetAnimal(id);
             return View(animal);
+        }
+        [HttpPost]
+        public IActionResult CreateComment(int id, string commentText) 
+        {
+            var animalToComment = _repository.GetAnimal(id);
+            animalToComment.Comments!.Add(new Comment { AnimalId = id, CommentText = commentText });
+            _repository.SaveChanges();
+            return RedirectToAction("AnimalDetails",id);
         }
     }
 }
