@@ -64,3 +64,28 @@ header{
 select{
     max-width: 400px;
 }
+
+.selectedAnimal{
+    margin: 40px;
+}
+
+.commentsBox{
+    background-color: #adc0de;
+    border-radius: 15px;
+    border: solid 1px #6441f0;
+    padding: 5px;
+}
+
+    .commentsBox p {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        display: block;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border: solid 3px #212529;
+        padding: 15px;
+        border-radius: 50px;
+        background: #354f69;
+    }

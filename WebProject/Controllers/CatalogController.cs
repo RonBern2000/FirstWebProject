@@ -37,15 +37,37 @@ namespace WebProject.Controllers
         {
             ViewBag.CommentModel = new Comment();
             var animal = _repository.GetAnimal(id);
-            return View(animal);
+            var compositeAnimalComment = new CompositeAnimalCommentModel() 
+            {
+                Animal = animal,
+                Comment = new Comment() { AnimalId = animal.AnimalId }
+            };
+            return View(compositeAnimalComment);
         }
+
         [HttpPost]
-        public IActionResult CreateComment(int id, string commentText) 
+        public IActionResult CreateComment(Comment comment) 
         {
-            var animalToComment = _repository.GetAnimal(id);
-            animalToComment.Comments!.Add(new Comment { AnimalId = id, CommentText = commentText });
-            _repository.SaveChanges();
-            return RedirectToAction("AnimalDetails",id);
+            if (ModelState.IsValid) 
+            {
+                var newComment = new Comment() 
+                {
+                    AnimalId = comment.AnimalId ,
+                    CommentText = comment.CommentText
+                };
+                _repository.AddComment(newComment);
+                _repository.SaveChanges();
+
+                return RedirectToAction("AnimalDetails", new { id = comment.AnimalId });
+            }
+
+            var animal = _repository.GetAnimal(comment.AnimalId);
+            var compositeAnimalComment = new CompositeAnimalCommentModel()
+            {
+                Animal = animal,
+                Comment = new Comment() { AnimalId = comment.AnimalId }
+            };
+            return View("AnimalDetails", compositeAnimalComment);
         }
     }
 }

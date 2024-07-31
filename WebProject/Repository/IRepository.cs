@@ -12,5 +12,6 @@ namespace WebProject.Repository
         IEnumerable<Animal> GetAnimals(string category);
         List<Category> GetAllData();
         IEnumerable<Animal> Top2Aniamls();
+        public void AddComment(Comment comment);
     }
 }

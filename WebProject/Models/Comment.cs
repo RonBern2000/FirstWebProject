@@ -7,6 +7,7 @@ namespace WebProject.Models
         
         public int CommentId { get; set; }
 
+        [Display(Name = "Enter a new Comment:")]
         [Required(ErrorMessage = "Please enter a valid comment (max 255 letters)")]
         [DataType(DataType.MultilineText)]
         [StringLength(255)]

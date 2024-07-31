@@ -25,6 +25,7 @@ namespace WebProject.Repository
             var animals = _zooContext.Animals!
                 .OrderByDescending(a => a.Comments!.Count)
                 .Take(2)
+                .AsNoTracking()
                 .ToList();
             return animals;
         }
@@ -34,5 +35,6 @@ namespace WebProject.Repository
             return animals;
         }
         public Animal GetAnimal(int id) => _zooContext.Animals!.Single(a => a.AnimalId == id);
+        public void AddComment(Comment comment) => _zooContext.Comments!.Add(comment);
     }
 }

@@ -1,4 +1,4 @@
-﻿@model WebProject.Models.Animal
+﻿@model WebProject.Models.CompositeAnimalCommentModel
 
 @{
     ViewBag.Title = "AnimalDetails";
@@ -27,28 +27,28 @@
     </nav>
 }
 
-<div class="container" style="margin: 40px;">
+<div class="container selectedAnimal">
     <div class="row">
         <div class="col-8">
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-3">
-                        <img src="@Model.PictureName" class="img-fluid rounded-start animalPhoto" alt="AnimalPhoto">
+                        <img src="@Model.Animal!.PictureName" class="img-fluid rounded-start animalPhoto" alt="AnimalPhoto">
                     </div>
                     <div class="col-md-9">
                         <div class="card-body">
-                            <h5 class="card-title">@Model.Name</h5>
-                            <p class="card-text">@Model.Description</p>
-                            <p class="card-text">Age: @Model.Age</p>
-                            <p class="card-text">Category Name: @Model.Category!.Name</p>
-                            <p class="card-text"><small class="text-body-secondary">Number of comments: @Model.Comments!.Count</small></p>
+                            <h5 class="card-title">@Model.Animal!.Name</h5>
+                            <p class="card-text">@Model.Animal!.Description</p>
+                            <p class="card-text">Age: @Model.Animal!.Age</p>
+                            <p class="card-text">Category Name: @Model.Animal!.Category!.Name</p>
+                            <p class="card-text"><small class="text-body-secondary">Number of comments: @Model.Animal!.Comments!.Count</small></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="commentsBox col-4">
-            @foreach(var c in Model.Comments!)
+        <div class="col-4 commentsBox">
+            @foreach (var c in Model.Animal!.Comments!)
             {
                 <p>@c.CommentText</p>
             }
@@ -56,14 +56,14 @@
     </div>
     <div class="row">
         <form asp-action="CreateComment" method="post">
-            <input type="hidden" asp-for="@Model.AnimalId" />
+            <input type="hidden" asp-for="Comment!.AnimalId" /> @*When submit we also transfer this data*@
             <div class="form-group">
-                <label asp-for="CommentText" class="control-label"></label>
-                <textarea asp-for="CommentText" class="form-control"></textarea>
-                <span asp-validation-for="CommentText" class="text-danger"></span>
+                <label asp-for="Comment!.CommentText" class="control-label"></label>
+                <textarea asp-for="Comment!.CommentText" class="form-control"></textarea>
+                <span asp-validation-for="Comment!.CommentText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create a new comment" class="btn btn-primary" />
+                <input type="submit" value="Create a new comment" class="btn btn-primary"/>
             </div>
         </form>
     </div>
