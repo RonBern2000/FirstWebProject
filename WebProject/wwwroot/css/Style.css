@@ -72,20 +72,74 @@ select{
 .commentsBox{
     background-color: #adc0de;
     border-radius: 15px;
-    border: solid 1px #6441f0;
     padding: 5px;
 }
 
-    .commentsBox p {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        white-space: normal;
-        display: block;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        border: solid 3px #212529;
-        padding: 15px;
-        border-radius: 50px;
-        background: #354f69;
+.commentsBox p {
+     word-wrap: break-word;
+     overflow-wrap: break-word;
+     white-space: normal;
+     display: block;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     border: solid 3px #212529;
+     padding: 15px;
+     border-radius: 50px;
+     background: #354f69;
+}
+
+.commentsBox p:not(:first-of-type){
+    margin-top: 4px;
+}
+
+.scroll-container {
+    height: 335px;
+    overflow-y: auto;
+}
+
+.scroll-container::-webkit-scrollbar {
+        width: 12px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+        background: #888;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+         background: #555;
+}
+
+.scroll-container::-webkit-scrollbar-button {
+        display: none;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .mt-auto {
+    margin-bottom: 0;
+}
+
+.categoryAndCreateBtn{
+    display:flex;
+    gap: 20px;
+}
+.categoryAndCreateBtn a{
+    height: 38px;
+    margin-top: 30px;
+    text-align:center;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .categoryAndCreateBtn {
+        flex-direction: column;
     }
+}
