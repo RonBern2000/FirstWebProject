@@ -50,21 +50,28 @@ namespace WebProject.Controllers
         {
             return null;
         }
-        [HttpPut]
         public IActionResult EditAnimal()
         {
             return null;
         }
 
         [HttpGet]
-        public IActionResult DeleteAnimal(int id)
+        public IActionResult DeleteAnimalForm(int id)
         {
-            return null;
+            var animal = _repository.GetAnimal(id);
+            return View(animal);
         }
-        [HttpDelete]
-        public IActionResult DeleteAnimal()
-        {
-            return null;
+        
+        public IActionResult DeleteAnimal(int id, string name)
+        { //Needs popups for successs and failure also add js validation
+            var animalToRemove = _repository.GetAnimal(id);
+            if(animalToRemove.Name == name)
+            {
+                _repository.RemoveAnimal(animalToRemove);
+                _repository.SaveChanges();
+                return RedirectToAction("Administrator");
+            }
+            return RedirectToAction("Administrator");
         }
     }
 }

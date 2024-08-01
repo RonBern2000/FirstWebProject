@@ -35,7 +35,6 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult AnimalDetails(int id) 
         {
-            ViewBag.CommentModel = new Comment();
             var animal = _repository.GetAnimal(id);
             var compositeAnimalComment = new CompositeAnimalCommentModel() 
             {

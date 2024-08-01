@@ -13,5 +13,7 @@ namespace WebProject.Repository
         List<Category> GetAllData();
         IEnumerable<Animal> Top2Aniamls();
         public void AddComment(Comment comment);
+        public void AddAnimal(Animal animal);
+        public void RemoveAnimal(Animal animal);
     }
 }

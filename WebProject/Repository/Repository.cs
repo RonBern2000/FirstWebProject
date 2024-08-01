@@ -36,5 +36,16 @@ namespace WebProject.Repository
         }
         public Animal GetAnimal(int id) => _zooContext.Animals!.Single(a => a.AnimalId == id);
         public void AddComment(Comment comment) => _zooContext.Comments!.Add(comment);
+        public void AddAnimal(Animal animal) => _zooContext.Animals!.Add(animal);
+        public void RemoveAnimal(Animal animal) => _zooContext.Animals!.Remove(animal);
     }
 }
+//public async Task<IEnumerable<Animal>> Top2AnimalsAsync()
+//{
+//    var animals = await _zooContext.Animals!
+//        .OrderByDescending(a => a.Comments!.Count)
+//        .Take(2)
+//        .AsNoTracking()
+//        .ToListAsync();
+//    return animals;
+//}
