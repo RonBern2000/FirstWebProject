@@ -14,16 +14,16 @@ namespace WebProject.Controllers
             _repository = repository;
         }
         [HttpGet]
-        public IActionResult Catalog(string category)
+        public async Task<IActionResult> Catalog(string category)
         {
-            var categories = _repository.GetCategories().Select(c => c.Name);
+            var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
 
             IEnumerable<Animal> animals;
             if (category == null)
-                animals = _repository.GetAnimals();
+                animals = await _repository.GetAnimals();
             else
-                animals = _repository.GetAnimals(category);
+                animals = await _repository.GetAnimals(category);
             return View(animals);
         }
         [HttpPost]
@@ -33,9 +33,9 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult AnimalDetails(int id) 
+        public async Task<IActionResult> AnimalDetails(int id) 
         {
-            var animal = _repository.GetAnimal(id);
+            var animal = await _repository.GetAnimal(id);
             var compositeAnimalComment = new CompositeAnimalCommentModel() 
             {
                 Animal = animal,
@@ -45,7 +45,7 @@ namespace WebProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateComment(Comment comment) 
+        public async Task<IActionResult> CreateComment(Comment comment) 
         {
             if (ModelState.IsValid) 
             {
@@ -54,13 +54,12 @@ namespace WebProject.Controllers
                     AnimalId = comment.AnimalId ,
                     CommentText = comment.CommentText
                 };
-                _repository.AddComment(newComment);
-                _repository.SaveChanges();
+                await _repository.AddComment(newComment);
 
                 return RedirectToAction("AnimalDetails", new { id = comment.AnimalId });
             }
 
-            var animal = _repository.GetAnimal(comment.AnimalId);
+            var animal = await _repository.GetAnimal(comment.AnimalId);
             var compositeAnimalComment = new CompositeAnimalCommentModel()
             {
                 Animal = animal,

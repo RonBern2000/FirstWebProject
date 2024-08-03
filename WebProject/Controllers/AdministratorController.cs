@@ -16,16 +16,16 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Administrator(string category)
+        public async Task<IActionResult> Administrator(string category)
         {
-            var categories = _repository.GetCategories().Select(c => c.Name);
+            var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
 
             IEnumerable<Animal> animals;
             if (category == null)
-                animals = _repository.GetAnimals();
+                animals = await _repository.GetAnimals();
             else
-                animals = _repository.GetAnimals(category);
+                animals = await _repository.GetAnimals(category);
             return View(animals);
         }
 
@@ -36,15 +36,15 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddAnimalForm()
+        public async Task<IActionResult> AddAnimalForm()
         {
             var animalView = new AnimalViewModel();
-            var categories = _repository.GetCategories().Select(c => c.Name);
+            var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
             return View(animalView);
         }
         [HttpPost]
-        public IActionResult AddAnimal(AnimalViewModel newAnimalView)
+        public async Task<IActionResult> AddAnimal(AnimalViewModel newAnimalView)
         {
             if (ModelState.IsValid && newAnimalView.Picture != null)
             {
@@ -55,43 +55,45 @@ namespace WebProject.Controllers
                     newAnimalView.Picture.CopyTo(fileStream);
                 }
 
-                var categoryId = _repository.GetCategoryByName(newAnimalView.CategoryName!).CategoryId;
+                var categoryId = await _repository.GetCategoryByName(newAnimalView.CategoryName!);
                 var animal = new Animal()
                 {
                     Name = newAnimalView.Name,
                     Age = newAnimalView.Age,
                     Description = newAnimalView.Description,
-                    CategoryId = categoryId,
+                    CategoryId = categoryId.CategoryId,
                     PictureName = $"/images/{newAnimalView.Picture!.FileName}"
                 };
-                _repository.AddAnimal(animal);
-                _repository.SaveChanges();
+                await _repository.AddAnimal(animal);
                 return RedirectToAction("Administrator"); // Need to add some indicator for success
             }
             return RedirectToAction("Administrator"); // Need to add some indicator for failure
         }
 
         [HttpGet]
-        public IActionResult EditAnimalForm(int id)
+        public async Task<IActionResult> EditAnimalForm(int id)
         {
-            var animal = _repository.GetAnimal(id);
+            var animal = await _repository.GetAnimal(id);
             ViewBag.Animal = animal;
             var animalEditor = new AnimalViewModel();
-            var categories = _repository.GetCategories().Select(c => c.Name);
+            var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
             return View(animalEditor);
         }
-        public IActionResult EditAnimal(AnimalViewModel newAnimalView, int id)
+        public async Task<IActionResult> EditAnimal(AnimalViewModel newAnimalView, int id)
         {
             if (ModelState.IsValid) 
             {
-                var animalToUpdate = _repository.GetAnimal(id);// animal to update
+                var animalToUpdate = await _repository.GetAnimal(id);// animal to update
                 animalToUpdate.Name = newAnimalView.Name;
                 animalToUpdate.Age = newAnimalView.Age;
 
-                if(newAnimalView.CategoryName != null && newAnimalView.CategoryName != animalToUpdate.Category!.Name) // if the category was changed
-                    animalToUpdate.CategoryId = _repository.GetCategoryByName(newAnimalView.CategoryName).CategoryId;
-                if(newAnimalView.Description != null && newAnimalView.Description != animalToUpdate.Description)
+                if (newAnimalView.CategoryName != null && newAnimalView.CategoryName != animalToUpdate.Category!.Name) // if the category was changed
+                {
+                    var category = await _repository.GetCategoryByName(newAnimalView.CategoryName);
+                    animalToUpdate.CategoryId = category.CategoryId;
+                } 
+                if (newAnimalView.Description != null && newAnimalView.Description != animalToUpdate.Description)
                     animalToUpdate.Description = newAnimalView.Description;
                 if(newAnimalView.Picture != null)
                 {
@@ -111,18 +113,17 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteAnimalForm(int id)
+        public async Task<IActionResult> DeleteAnimalForm(int id)
         {
-            var animal = _repository.GetAnimal(id);
+            var animal = await _repository.GetAnimal(id);
             return View(animal);
         }
-        public IActionResult DeleteAnimal(int id, string name)
+        public async Task<IActionResult> DeleteAnimal(int id, string name)
         { //Needs popups for successs and failure also add js validation
-            var animalToRemove = _repository.GetAnimal(id);
+            var animalToRemove = await _repository.GetAnimal(id);
             if(animalToRemove.Name == name)
             {
-                _repository.RemoveAnimal(animalToRemove);
-                _repository.SaveChanges();
+                await _repository.RemoveAnimal(animalToRemove);
                 return RedirectToAction("Administrator");
             }
             return RedirectToAction("Administrator");

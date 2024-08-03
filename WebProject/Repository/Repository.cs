@@ -12,33 +12,34 @@ namespace WebProject.Repository
             _zooContext = zooContext;
         }
         public void SaveChanges() => _zooContext.SaveChanges();
-        public IEnumerable<Animal> GetAnimals() => _zooContext.Animals!;
-        public IEnumerable<Category> GetCategories() => _zooContext.Categories!;
-        public IEnumerable<Comment> GetComments() => _zooContext.Comments!;
-        public List<Category> GetAllData()
-        {
-            var data = _zooContext.Categories!.Include(categorty => categorty.Animals!).ThenInclude(comment => comment.Comments!).ToList();
-            return data;
-        }
-        public IEnumerable<Animal> Top2Aniamls()
-        {
-            var animals = _zooContext.Animals!
+        public async Task<IEnumerable<Animal>> GetAnimals() => await _zooContext.Animals!.ToListAsync();
+        public async Task<IEnumerable<Category>> GetCategories() => await _zooContext.Categories!.ToListAsync();
+        public async Task<IEnumerable<string>> GetCategoriesNames() => await _zooContext.Categories!.Select(c => c.Name!).ToListAsync();
+        public async Task<IEnumerable<Comment>> GetComments() => await _zooContext.Comments!.ToListAsync();
+        public async Task<IEnumerable<Category>> GetAllData() => await _zooContext.Categories!.Include(categorty => categorty.Animals!).ThenInclude(comment => comment.Comments!).ToListAsync();
+        public async Task<IEnumerable<Animal>> Top2Aniamls() => await _zooContext.Animals!
                 .OrderByDescending(a => a.Comments!.Count)
                 .Take(2)
                 .AsNoTracking()
-                .ToList();
-            return animals;
-        }
-        IEnumerable<Animal> IRepository.GetAnimals(string category)
+                .ToListAsync();
+        async Task<IEnumerable<Animal>> IRepository.GetAnimals(string category) => await _zooContext.Animals!.Where(a => a.Category!.Name == category).ToListAsync();
+        public async Task<Animal> GetAnimal(int id) => await _zooContext.Animals!.Include(a => a.Category).SingleAsync(a => a.AnimalId == id);
+        public async Task AddComment(Comment comment)
         {
-            var animals = _zooContext.Animals!.Where(a => a.Category!.Name == category);
-            return animals;
+            _zooContext.Comments!.Add(comment);
+            await _zooContext.SaveChangesAsync();
         }
-        public Animal GetAnimal(int id) => _zooContext.Animals!.Include(a => a.Category).Single(a => a.AnimalId == id);
-        public void AddComment(Comment comment) => _zooContext.Comments!.Add(comment);
-        public void AddAnimal(Animal animal) => _zooContext.Animals!.Add(animal);
-        public void RemoveAnimal(Animal animal) => _zooContext.Animals!.Remove(animal);
-        public Category GetCategoryByName(string category) => _zooContext.Categories!.Single(c => c.Name == category);
+        public async Task AddAnimal(Animal animal)
+        {
+            _zooContext.Animals!.Add(animal);
+            await _zooContext.SaveChangesAsync();
+        }
+        public async Task RemoveAnimal(Animal animal)
+        {
+            _zooContext.Animals!.Remove(animal);
+            await _zooContext.SaveChangesAsync();
+        }
+        public async Task<Category> GetCategoryByName(string category) => await _zooContext.Categories!.SingleAsync(c => c.Name == category);
     }
 }
 //public async Task<IEnumerable<Animal>> Top2AnimalsAsync()

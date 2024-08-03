@@ -12,9 +12,9 @@ namespace WebProject.Controllers
         {
             _repository = repository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var topTwoAnimals = _repository.Top2Aniamls();
+            var topTwoAnimals = await _repository.Top2Aniamls();
             return View(topTwoAnimals);
         }
     }
