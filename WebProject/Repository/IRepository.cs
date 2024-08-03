@@ -15,5 +15,6 @@ namespace WebProject.Repository
         public void AddComment(Comment comment);
         public void AddAnimal(Animal animal);
         public void RemoveAnimal(Animal animal);
+        public Category GetCategoryByName(string category);
     }
 }

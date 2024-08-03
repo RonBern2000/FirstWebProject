@@ -34,21 +34,21 @@
             @Html.DropDownList("category", ViewBag.Categories, "Select Category", new { @class = "form-control", @onchange = "this.form.submit();" })
         }
     </div>
-    <a class="btn btn-success" asp-controller="Administrator" asp-action="AddAnimal">Add new animal</a>
+    <a class="btn btn-success" asp-controller="Administrator" asp-action="AddAnimalForm">Add new animal</a>
 </div>
 
 
 <div id="catalogContent">
     @foreach (var a in Model)
     {
-        <div class="card adminCards" style="width: 18rem;">
-            <img class="card-img-top" src="@a.PictureName" alt="animalPic">
+        <div class="card adminCards" style="width: 24rem;">
+            <img class="card-img-top img-fluid" src="@a.PictureName" alt="animalPic">
             <div class="card-body">
                 <h4 class="card-text">@a.Name</h4>
                 <p class="card-text">@a.Description</p>
                 <p class="card-text">Age: @a.Age</p>
                 <div class="mt-auto">
-                    <a class="btn btn-primary" asp-controller="Administrator" asp-action="EditAnimal" asp-route-id="@a.AnimalId">Edit</a>
+                    <a class="btn btn-primary" asp-controller="Administrator" asp-action="EditAnimalForm" asp-route-id="@a.AnimalId">Edit</a>
                     <a class="btn btn-danger" asp-controller="Administrator" asp-action="DeleteAnimalForm" asp-route-id="@a.AnimalId">Delete</a>
                 </div>
             </div>

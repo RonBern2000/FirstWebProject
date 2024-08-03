@@ -1,7 +1,7 @@
-﻿@model WebProject.Models.Animal;
+﻿@model WebProject.Models.AnimalViewModel
 
 @{
-    ViewBag.Title = "DeleteAnimal";
+    ViewBag.Title = "AddAnimalForm";
 }
 
 @section headerSection {
@@ -28,27 +28,32 @@
     </nav>
 }
 
-<form class="confirmDelete" asp-controller="Administrator" asp-action="DeleteAnimal" method="post">
-    <input type="hidden" name="id" asp-for="AnimalId"/> @*When submit we also transfer this data*@
+<form class="mt-3 animalForm" asp-controller="Administrator" asp-action="AddAnimal" enctype="multipart/form-data" method="post">
     <div class="form-group">
-        <p>Enter the animal name "@Model.Name" to confirm</p>
-        <input id="userInput" name="name" placeholder="AnimalName" class="form-control" oninput="onInputDelete('@Model.Name')" />
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" placeholder="ExampleName"/>
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age"></label>
+        <input asp-for="Age" class="form-control" placeholder="1,2,3...275" />
+        <span asp-validation-for="Age"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Picture"></label>
+        <input asp-for="Picture" class="form-control" placeholder="Upload a file"/>
+        <span asp-validation-for="Picture"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" placeholder="Long Text"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("CategoryName", ViewBag.Categories, "Select Category", new { @class = "form-control" })
     </div>
     <div class="form-group confirmBtns">
-        <input id="deleteBtn" class="btn btn-danger" type="submit" value="Delete" disabled/>
-        <a asp-action="Administrator" class="btn btn-secondary" type="submit">Cancel</a>
+        <input id="addBtn" class="btn btn-success" type="submit" value="Add" />
+        <a asp-action="Administrator" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
-<script>
-    const onInputDelete = (modelName) => {
-        const userInput = document.getElementById('userInput').value;
-        const deleteBtn = document.getElementById('deleteBtn');
-
-        if (userInput === modelName) {
-            deleteBtn.disabled = false;
-        }
-        else {
-            deleteBtn.disabled = true;
-        }
-    };
-</script>

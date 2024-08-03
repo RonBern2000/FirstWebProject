@@ -1,8 +1,11 @@
+const onInputDelete = (modelName) => {
+    const userInput = document.getElementById('userInput').value;
+    const deleteBtn = document.getElementById('deleteBtn');
 
-//const navItemActive = (element) => {
-//    element.classList.add("active");
-//};
-
-//const navItemActive = (element) => {
-//    element.style.color = "white";
-//};
+    if (userInput === modelName) {
+        deleteBtn.disabled = false;
+    }
+    else {
+        deleteBtn.disabled = true;
+    }
+};

@@ -34,10 +34,11 @@ namespace WebProject.Repository
             var animals = _zooContext.Animals!.Where(a => a.Category!.Name == category);
             return animals;
         }
-        public Animal GetAnimal(int id) => _zooContext.Animals!.Single(a => a.AnimalId == id);
+        public Animal GetAnimal(int id) => _zooContext.Animals!.Include(a => a.Category).Single(a => a.AnimalId == id);
         public void AddComment(Comment comment) => _zooContext.Comments!.Add(comment);
         public void AddAnimal(Animal animal) => _zooContext.Animals!.Add(animal);
         public void RemoveAnimal(Animal animal) => _zooContext.Animals!.Remove(animal);
+        public Category GetCategoryByName(string category) => _zooContext.Categories!.Single(c => c.Name == category);
     }
 }
 //public async Task<IEnumerable<Animal>> Top2AnimalsAsync()
