@@ -5,6 +5,7 @@ namespace WebProject.Repository
     public interface IRepository
     {
         public void SaveChanges();
+        public Task SaveChangesAsync();
         Task<IEnumerable<Category>> GetCategories();
         Task<IEnumerable<string>> GetCategoriesNames();
         Task<IEnumerable<Comment>> GetComments();

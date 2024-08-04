@@ -40,6 +40,7 @@ namespace WebProject.Repository
             await _zooContext.SaveChangesAsync();
         }
         public async Task<Category> GetCategoryByName(string category) => await _zooContext.Categories!.SingleAsync(c => c.Name == category);
+        public Task SaveChangesAsync() => _zooContext.SaveChangesAsync();
     }
 }
 //public async Task<IEnumerable<Animal>> Top2AnimalsAsync()

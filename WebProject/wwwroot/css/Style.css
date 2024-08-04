@@ -168,6 +168,11 @@ select{
       margin-block:10px;
 }
 
+.field-validation-error span{
+    color:red;
+    font-size: 15px;
+}
+
 @media only screen and (max-width: 768px){
     .categoryAndCreateBtn {
         flex-direction: column;

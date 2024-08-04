@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebProject.Repository;
-using WebProject.Models;
 
 namespace WebProject.Controllers
 {

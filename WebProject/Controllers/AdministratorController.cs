@@ -44,13 +44,14 @@ namespace WebProject.Controllers
             return View(animalView);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddAnimal(AnimalViewModel newAnimalView)
         {
             if (ModelState.IsValid && newAnimalView.Picture != null)
             {
-                var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath,"images");
-                var filePath = Path.Combine(uploadFolder,newAnimalView.Picture.FileName);
-                using(var fileStream = new FileStream(filePath, FileMode.Create))
+                var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                var filePath = Path.Combine(uploadFolder, newAnimalView.Picture.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     newAnimalView.Picture.CopyTo(fileStream);
                 }
@@ -65,9 +66,9 @@ namespace WebProject.Controllers
                     PictureName = $"/images/{newAnimalView.Picture!.FileName}"
                 };
                 await _repository.AddAnimal(animal);
-                return RedirectToAction("Administrator"); // Need to add some indicator for success
+                return RedirectToAction("ResponseToOperation", new { operationSuccess = true });
             }
-            return RedirectToAction("Administrator"); // Need to add some indicator for failure
+            return RedirectToAction("ResponseToOperation", new { operationSuccess = false });
         }
 
         [HttpGet]
@@ -75,41 +76,43 @@ namespace WebProject.Controllers
         {
             var animal = await _repository.GetAnimal(id);
             ViewBag.Animal = animal;
-            var animalEditor = new AnimalViewModel();
+            var animalEditor = new AnimalModelEditor();
+            animalEditor.Description = animal.Description;
+            animalEditor.CategoryName = animal.Category!.Name;
             var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
             return View(animalEditor);
         }
-        public async Task<IActionResult> EditAnimal(AnimalViewModel newAnimalView, int id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAnimal(AnimalModelEditor animalEditor, int id)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var animalToUpdate = await _repository.GetAnimal(id);// animal to update
-                animalToUpdate.Name = newAnimalView.Name;
-                animalToUpdate.Age = newAnimalView.Age;
+                animalToUpdate.Name = animalEditor.Name;
+                animalToUpdate.Age = animalEditor.Age;
+                animalToUpdate.Description = animalEditor.Description;
 
-                if (newAnimalView.CategoryName != null && newAnimalView.CategoryName != animalToUpdate.Category!.Name) // if the category was changed
+                if (animalEditor.CategoryName != animalToUpdate.Category!.Name) // if the category was changed
                 {
-                    var category = await _repository.GetCategoryByName(newAnimalView.CategoryName);
+                    var category = await _repository.GetCategoryByName(animalEditor.CategoryName!);
                     animalToUpdate.CategoryId = category.CategoryId;
-                } 
-                if (newAnimalView.Description != null && newAnimalView.Description != animalToUpdate.Description)
-                    animalToUpdate.Description = newAnimalView.Description;
-                if(newAnimalView.Picture != null)
+                }
+                if (animalEditor.Picture != null)
                 {
                     var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                    var filePath = Path.Combine(uploadFolder, newAnimalView.Picture.FileName);
+                    var filePath = Path.Combine(uploadFolder, animalEditor.Picture.FileName);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        newAnimalView.Picture.CopyTo(fileStream);
+                        animalEditor.Picture.CopyTo(fileStream);
                     }
-                    animalToUpdate.PictureName = $"/images/{newAnimalView.Picture!.FileName}";
+                    animalToUpdate.PictureName = $"/images/{animalEditor.Picture!.FileName}";
                 }
 
-                _repository.SaveChanges();
-                return RedirectToAction("Administrator"); // Need to add some indicator for success
+                await _repository.SaveChangesAsync();
+                return RedirectToAction("ResponseToOperation", new { operationSuccess = true });
             }
-            return RedirectToAction("Administrator"); // Need to add some indicator for failure
+            return RedirectToAction("ResponseToOperation", new { operationSuccess = false });
         }
 
         [HttpGet]
@@ -118,15 +121,44 @@ namespace WebProject.Controllers
             var animal = await _repository.GetAnimal(id);
             return View(animal);
         }
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAnimal(int id, string name)
-        { //Needs popups for successs and failure also add js validation
+        {
             var animalToRemove = await _repository.GetAnimal(id);
-            if(animalToRemove.Name == name)
+            if (animalToRemove.Name == name)
             {
                 await _repository.RemoveAnimal(animalToRemove);
                 return RedirectToAction("Administrator");
             }
             return RedirectToAction("Administrator");
         }
+        public IActionResult ResponseToOperation(bool operationSuccess)
+        {
+            ViewBag.OperationSuccess = operationSuccess;
+            return View("Response");
+        }
     }
 }
+//var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", animal.PictureName!);
+//filePath = "wwwroot" + filePath;
+//if (System.IO.File.Exists(filePath)) // if the path exists
+//{
+//    using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+//    var fileType = GetPictureType(filePath);
+//    animalEditor.Picture = new FormFile(stream, 0, stream.Length, "Picture", Path.GetFileName(stream.Name))
+//    {
+//        Headers = new HeaderDictionary(),
+//        ContentType = fileType
+//    };
+//}
+//private string GetPictureType(string path)
+//{
+//    var extension = Path.GetExtension(path).ToLowerInvariant();
+//    return extension switch
+//    {
+//        ".jpg" => "image/jpeg",
+//        ".jpeg" => "image/jpeg",
+//        ".png" => "image/png",
+//        _ => "application/octet-stream",
+//    };
+//}

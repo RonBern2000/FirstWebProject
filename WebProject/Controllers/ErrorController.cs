@@ -6,7 +6,7 @@ namespace WebProject.Controllers
     {
         public IActionResult ErrorPage()
         {
-            return View();
+            return View(); // Not Implemented
         }
     }
 }

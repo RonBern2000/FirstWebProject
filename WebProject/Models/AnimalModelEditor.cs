@@ -4,21 +4,19 @@ using WebProject.Validators;
 
 namespace WebProject.Models
 {
-    public class AnimalViewModel // A model to get data from the user.
+    public class AnimalModelEditor
     {
         [Required(ErrorMessage = "Please enter a name")]
-        [StringLength(50,ErrorMessage = "Please do not enter a name over 50 characters")]
+        [StringLength(50, ErrorMessage = "Please do not enter a name over 50 characters")]
         [DisplayName("Animal name:")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "Please enter an age")]
-        [Range(1,250,ErrorMessage = "Please enter an age between 1-250")]
+        [Range(1, 250, ErrorMessage = "Please enter an age between 1-250")]
         [DisplayName("Animal age:")]
         public int Age { get; set; }
 
-        [Required(ErrorMessage = "Please enter a picture file")]
         [DisplayName("Animal picture:")]
-        [AllowedFileType([".jpg", ".jpeg", ".png"], ErrorMessage = "Wrong file type(extention)")]
         public IFormFile? Picture { get; set; }
 
         [Required(ErrorMessage = "Please enter a description")]
