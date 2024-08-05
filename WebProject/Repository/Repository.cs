@@ -43,12 +43,3 @@ namespace WebProject.Repository
         public Task SaveChangesAsync() => _zooContext.SaveChangesAsync();
     }
 }
-//public async Task<IEnumerable<Animal>> Top2AnimalsAsync()
-//{
-//    var animals = await _zooContext.Animals!
-//        .OrderByDescending(a => a.Comments!.Count)
-//        .Take(2)
-//        .AsNoTracking()
-//        .ToListAsync();
-//    return animals;
-//}

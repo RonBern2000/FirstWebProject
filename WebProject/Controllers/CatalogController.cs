@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebProject.Filters;
 using WebProject.Models;
 using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
+    [TypeFilter(typeof(ErrorsExceptionFilter))]
     public class CatalogController : Controller
     {
         private readonly IRepository _repository;
-
-        public CatalogController(IRepository repository)
+        private readonly ILogger<CatalogController> _logger;
+        public CatalogController(IRepository repository, ILogger<CatalogController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<IActionResult> Catalog(string category)

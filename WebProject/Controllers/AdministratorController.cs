@@ -1,23 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebProject.Filters;
 using WebProject.Models;
 using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
+    [TypeFilter(typeof(ErrorsExceptionFilter))]
     public class AdministratorController : Controller
     {
         private readonly IRepository _repository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdministratorController(IRepository repository, IWebHostEnvironment webHostEnvironment)
+        private readonly ILogger<AdministratorController> _logger;
+        public AdministratorController(IRepository repository, IWebHostEnvironment webHostEnvironment, ILogger<AdministratorController> logger)
         {
             _repository = repository;
             _webHostEnvironment = webHostEnvironment;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Administrator(string category)
         {
+            _logger.LogWarning("Entered Administrator main window");
             var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
 
@@ -139,26 +144,3 @@ namespace WebProject.Controllers
         }
     }
 }
-//var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", animal.PictureName!);
-//filePath = "wwwroot" + filePath;
-//if (System.IO.File.Exists(filePath)) // if the path exists
-//{
-//    using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-//    var fileType = GetPictureType(filePath);
-//    animalEditor.Picture = new FormFile(stream, 0, stream.Length, "Picture", Path.GetFileName(stream.Name))
-//    {
-//        Headers = new HeaderDictionary(),
-//        ContentType = fileType
-//    };
-//}
-//private string GetPictureType(string path)
-//{
-//    var extension = Path.GetExtension(path).ToLowerInvariant();
-//    return extension switch
-//    {
-//        ".jpg" => "image/jpeg",
-//        ".jpeg" => "image/jpeg",
-//        ".png" => "image/png",
-//        _ => "application/octet-stream",
-//    };
-//}

@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using WebProject.Data;
 using WebProject.Repository;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 string stringConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
 builder.Services.AddDbContext<ZooContext>(options => options.UseLazyLoadingProxies().UseSqlServer(stringConnection));// adding the dbContext service and setting up the options to use lazy loading and sqlServer
 builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 builder.Services.AddTransient<IRepository,Repository>(); // adding the Repository service
-
-//Need to add the logs config
+builder.Host.UseSerilog((ctx, lc) => 
+        lc.ReadFrom.Configuration(ctx.Configuration)); // adding logs
 
 var app = builder.Build();
 
