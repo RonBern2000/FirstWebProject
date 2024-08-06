@@ -6,7 +6,7 @@ using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
-    [TypeFilter(typeof(ErrorsExceptionFilter))]
+    [ServiceFilter(typeof(ActionsFilter))]
     public class AdministratorController : Controller
     {
         private readonly IRepository _repository;
@@ -22,7 +22,6 @@ namespace WebProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Administrator(string category)
         {
-            _logger.LogWarning("Entered Administrator main window");
             var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
 
@@ -43,10 +42,9 @@ namespace WebProject.Controllers
         [HttpGet]
         public async Task<IActionResult> AddAnimalForm()
         {
-            var animalView = new AnimalViewModel();
             var categories = await _repository.GetCategoriesNames();
             ViewBag.Categories = new SelectList(categories);
-            return View(animalView);
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebProject.Data;
 using WebProject.Repository;
 using Serilog;
+using WebProject.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 string stringConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
@@ -10,6 +11,7 @@ builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 builder.Services.AddTransient<IRepository,Repository>(); // adding the Repository service
 builder.Host.UseSerilog((ctx, lc) => 
         lc.ReadFrom.Configuration(ctx.Configuration)); // adding logs
+builder.Services.AddScoped<ActionsFilter>();
 
 var app = builder.Build();
 

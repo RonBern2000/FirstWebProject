@@ -4,7 +4,7 @@ using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
-    [TypeFilter(typeof(ErrorsExceptionFilter))]
+    [ServiceFilter(typeof(ActionsFilter))]
     public class HomeController : Controller
     {
         private readonly IRepository _repository;
@@ -16,7 +16,6 @@ namespace WebProject.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            _logger.LogInformation("Home controller/Index was entered");
             var topTwoAnimals = await _repository.Top2Aniamls();
             return View(topTwoAnimals);
         }

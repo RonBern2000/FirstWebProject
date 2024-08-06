@@ -6,7 +6,7 @@ using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
-    [TypeFilter(typeof(ErrorsExceptionFilter))]
+    [ServiceFilter(typeof(ActionsFilter))]
     public class CatalogController : Controller
     {
         private readonly IRepository _repository;
