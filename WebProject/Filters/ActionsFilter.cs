@@ -14,7 +14,7 @@ namespace WebProject.Filters
         {
             var startTime = DateTime.UtcNow;
             var actionName = context.ActionDescriptor.DisplayName;
-            _logger.LogInformation($"Starting execution of action: {actionName} at {startTime}", actionName, startTime);
+            _logger.LogWarning($"Starting execution of action: {actionName} at {startTime}", actionName, startTime);
 
             var action = await next();
 

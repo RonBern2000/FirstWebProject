@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebProject.Filters;
 using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
+    [Authorize]
     [ServiceFilter(typeof(ActionsFilter))]
     public class HomeController : Controller
     {
@@ -14,6 +16,7 @@ namespace WebProject.Controllers
             _repository = repository;
             _logger = logger;
         }
+        
         public async Task<IActionResult> Index()
         {
             var topTwoAnimals = await _repository.Top2Aniamls();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebProject.Filters;
 using WebProject.Models;
@@ -6,6 +7,7 @@ using WebProject.Repository;
 
 namespace WebProject.Controllers
 {
+    [Authorize(Roles = "Visitor,Admin")]
     [ServiceFilter(typeof(ActionsFilter))]
     public class CatalogController : Controller
     {

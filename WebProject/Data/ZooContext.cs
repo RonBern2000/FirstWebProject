@@ -5,7 +5,7 @@ namespace WebProject.Data
 {
     public class ZooContext : DbContext
     {
-        public ZooContext(DbContextOptions options) : base(options)
+        public ZooContext(DbContextOptions<ZooContext> options) : base(options)
         {
         }
         public DbSet<Animal>? Animals { get; set; }
