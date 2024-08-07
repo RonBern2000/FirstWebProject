@@ -30,6 +30,14 @@ builder.Services.AddAuthorization(options => // Adding authorization policies to
 
     options.AddPolicy("CommentPolicy", policy =>
         policy.RequireClaim("Permission", "Comment"));
+
+    options.AddPolicy("ManageUsersAndContentPolicy", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim(c => c.Type == "Permission" && (c.Value == "ManageUsers" || c.Value == "ManageContent"))));
+
+    options.AddPolicy("ViewAndCommentPolicy", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim(c => c.Type == "Permission" && (c.Value == "ViewContent" || c.Value == "Comment"))));
 });
 
 builder.Services.AddTransient<IRepository,Repository>(); // adding the Repository service

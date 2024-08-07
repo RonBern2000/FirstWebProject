@@ -24,7 +24,16 @@
 
     <footer >
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link px-2 ">Home</a></li>
+            <li class="nav-item">
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    <a asp-controller="Home" asp-action="Index" class="nav-link px-2 ">Home</a>
+                }
+                else
+                {
+                    <a href="#" class="nav-link px-2 ">Home</a>
+                }
+            </li>
             <li class="nav-item"><a href="https://www.google.com/maps/place/Love+Hill+Park/" target="_blank" class="nav-link px-2 ">Location</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 ">About</a></li>
             </ul>

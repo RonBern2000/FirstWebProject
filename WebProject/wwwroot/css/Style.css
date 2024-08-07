@@ -173,7 +173,12 @@ select{
     font-size: 15px;
 }
 
-@media only screen and (max-width: 768px){
+#logOut{
+    margin-right: 30px;
+    font-size: 1.25rem;
+}
+
+@media only screen and (max-width: 768px) {
     .categoryAndCreateBtn {
         flex-direction: column;
     }

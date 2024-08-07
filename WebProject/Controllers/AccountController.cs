@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebProject.Filters;
 using WebProject.Models;
@@ -36,10 +37,16 @@ namespace WebProject.Controllers
             }
             return View();
         }
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("LoginForm", "Account");
+        }
+        
+        public IActionResult AccessDenied()
+        {
+            return RedirectToAction("Index", "Home");
         }
     }
 }
