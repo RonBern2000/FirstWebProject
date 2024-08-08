@@ -28,38 +28,43 @@
         @await Html.PartialAsync("_LogoutPartialView")
     </nav>
 }
-
-<form class="mt-3 animalForm" asp-controller="Administrator" asp-action="EditAnimal" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="id" value="@ViewBag.Animal.AnimalId" />
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" value="@ViewBag.Animal.Name" placeholder="ExampleName" />
-        <span asp-validation-for="Name"></span>
+<div class="animalFormContainer">
+    <form class="mt-3 animalForm" asp-controller="Administrator" asp-action="EditAnimal" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="id" value="@ViewBag.Animal.AnimalId" />
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" value="@ViewBag.Animal.Name" placeholder="ExampleName" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Age"></label>
+            <input asp-for="Age" value="@ViewBag.Animal.Age" class="form-control" placeholder="1,2,3...275" />
+            <span asp-validation-for="Age"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Picture"></label>
+            <input asp-for="Picture" class="form-control" placeholder="Keep Empty to not change the picture />
+            <span asp-validation-for="Picture"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter new Description"></textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group">
+            <label>Current Description:</label>
+            <textarea class="form-control" readonly>@ViewBag.Animal.Description</textarea>
+        </div>
+        <div class="form-group">
+            @Html.DropDownList("CategoryName", ViewBag.Categories, "Select Category", new { @class = "form-control" })
+        </div>
+        <div class="form-group confirmBtns">
+            <input id="addBtn" class="btn btn-success" type="submit" value="Save" />
+            <a asp-action="Administrator" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+    <div>
+        <h4>Current animal image:</h4>
+        <img src="@ViewBag.Animal.PictureName" />
     </div>
-    <div class="form-group">
-        <label asp-for="Age"></label>
-        <input asp-for="Age" value="@ViewBag.Animal.Age" class="form-control" placeholder="1,2,3...275" />
-        <span asp-validation-for="Age"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Picture"></label>
-        <input asp-for="Picture" class="form-control" placeholder="Keep Empty to not change the picture/>
-        <span asp-validation-for="Picture"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control" placeholder="Enter new Description"></textarea>
-        <span asp-validation-for="Description"></span>
-    </div>
-    <div class="form-group">
-        <label >Current Description:</label>
-        <textarea class="form-control" readonly>@ViewBag.Animal.Description</textarea>
-    </div>
-    <div class="form-group">
-        @Html.DropDownList("CategoryName", ViewBag.Categories, "Select Category", new { @class = "form-control" })
-    </div>
-    <div class="form-group confirmBtns">
-        <input id="addBtn" class="btn btn-success" type="submit" value="Save" />
-        <a asp-action="Administrator" class="btn btn-secondary">Cancel</a>
-    </div>
-</form>
+</div>

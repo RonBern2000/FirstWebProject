@@ -68,7 +68,7 @@ using (var scope = app.Services.CreateScope())
 
 if (app.Environment.IsStaging() || app.Environment.IsProduction())
 {
-    app.UseExceptionHandler("/Error/Index");
+    app.UseExceptionHandler("/Error/ErrorPage");
 }
 
 app.UseStaticFiles(); // For enabling local images
@@ -86,7 +86,7 @@ app.UseRouting(); // using routing
 
 app.UseAuthorization();
 
-app.MapHub<MainHub>("/mainhub");
+app.MapHub<MainHub>("/mainHub");
 
 app.MapControllerRoute(
     name: "default",

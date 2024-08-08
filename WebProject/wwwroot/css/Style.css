@@ -178,6 +178,22 @@ select{
     font-size: 1.25rem;
 }
 
+.animalFormContainer{
+    display:flex;
+    gap: 30px;
+}
+
+.animalFormContainer > div {
+    margin-top: 30px;
+}
+
+
+.animalFormContainer img {
+    height: 200px;
+    width: 300px;
+    border-radius: 15px;
+}
+
 @media only screen and (max-width: 768px) {
     .categoryAndCreateBtn {
         flex-direction: column;
