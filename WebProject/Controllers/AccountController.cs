@@ -20,9 +20,9 @@ namespace WebProject.Controllers
             _roleManager = roleManager;
         }
         [HttpGet]
-        public IActionResult LoginForm()
+        public IActionResult Login()
         {
-             return View();
+             return View("LoginForm");
         }
         [HttpPost]
         public async Task<IActionResult> Login(UserModel user)
@@ -35,18 +35,22 @@ namespace WebProject.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return View();
+            return RedirectToAction("Login");
         }
         [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("LoginForm", "Account");
+            return RedirectToAction("Login", "Account");
         }
         
         public IActionResult AccessDenied()
         {
-            return RedirectToAction("Index", "Home");
+            if (User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login");
         }
     }
 }

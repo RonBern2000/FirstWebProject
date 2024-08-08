@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using WebProject.Data;
-using WebProject.Repository;
-using Serilog;
-using WebProject.Filters;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using WebProject.Data;
+using WebProject.Filters;
+using WebProject.Hubs;
+using WebProject.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 string stringZooConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
@@ -16,6 +17,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<UsersContext>();
 
 builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
+
+builder.Services.AddSignalR();
 
 builder.Services.AddAuthorization(options => // Adding authorization policies to be more preciese with who is allowd to do what
 {
@@ -33,16 +36,18 @@ builder.Services.AddAuthorization(options => // Adding authorization policies to
 
     options.AddPolicy("ManageUsersAndContentPolicy", policy =>
         policy.RequireAssertion(context =>
-            context.User.HasClaim(c => c.Type == "Permission" && (c.Value == "ManageUsers" || c.Value == "ManageContent"))));
+            context.User.HasClaim(c => c.Type == "Permission" && c.Value == "ManageUsers") &&
+            context.User.HasClaim(c => c.Type == "Permission" && c.Value == "ManageContent")));
 
     options.AddPolicy("ViewAndCommentPolicy", policy =>
         policy.RequireAssertion(context =>
-            context.User.HasClaim(c => c.Type == "Permission" && (c.Value == "ViewContent" || c.Value == "Comment"))));
+            context.User.HasClaim(c => c.Type == "Permission" && c.Value == "ViewContent") &&
+            context.User.HasClaim(c => c.Type == "Permission" && c.Value == "Comment")));
 });
 
-builder.Services.AddTransient<IRepository,Repository>(); // adding the Repository service
+builder.Services.AddTransient<IRepository, Repository>(); // adding the Repository service
 
-builder.Host.UseSerilog((ctx, lc) => 
+builder.Host.UseSerilog((ctx, lc) =>
         lc.ReadFrom.Configuration(ctx.Configuration)); // adding logs
 builder.Services.AddScoped<ActionsFilter>();
 
@@ -61,14 +66,14 @@ using (var scope = app.Services.CreateScope())
     await SeedData.Initialize(userManager, roleManager);
 }
 
-if(app.Environment.IsStaging() || app.Environment.IsProduction())
+if (app.Environment.IsStaging() || app.Environment.IsProduction())
 {
     app.UseExceptionHandler("/Error/Index");
 }
 
 app.UseStaticFiles(); // For enabling local images
 
-using(var scope = app.Services.CreateScope()) // Reseting the db and filling it up again
+using (var scope = app.Services.CreateScope()) // Reseting the db and filling it up again
 {
     var ctx = scope.ServiceProvider.GetRequiredService<ZooContext>();
     ctx.Database.EnsureDeleted();
@@ -81,8 +86,10 @@ app.UseRouting(); // using routing
 
 app.UseAuthorization();
 
+app.MapHub<MainHub>("/mainhub");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=LoginForm}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

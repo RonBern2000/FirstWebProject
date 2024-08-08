@@ -50,6 +50,7 @@ else
                 </ul>
             </div>
         </div>
+        @await Html.PartialAsync("_LogoutPartialView")
     </nav>
     }
 }
@@ -65,12 +66,18 @@ else
 <div id="catalogContent">
     @foreach (var a in Model)
     {
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="@a.PictureName" alt="animalPic">
-            <div class="card-body">
-                <h4 class="card-text">@a.Name</h4>
-                <a class="btn btn-primary" asp-controller="Catalog" asp-action="AnimalDetails" asp-route-id="@a.AnimalId">Details</a>
+        <form asp-controller="Catalog" asp-action="AnimalDetails" method="get">
+            <input type="hidden" name="id" asp-for="@a.AnimalId"/>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@a.PictureName" alt="animalPic">
+                <div class="card-body">
+                    <h4 class="card-text">@a.Name</h4>
+                    <input class="btn btn-primary" type="submit" value="Details" />
+                </div>
             </div>
-        </div>
+        </form>
     }
 </div>
+
+@* <a class="btn btn-primary" asp-controller="Catalog" asp-action="AnimalDetails" asp-route-id="@a.AnimalId">Details</a>
+ *@

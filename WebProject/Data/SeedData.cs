@@ -4,6 +4,7 @@ namespace WebProject.Data
 {
     public class SeedData
     {
+        // Because we want to implement a more complex init we have to take it aside to a different class and not in OnModelCreating.
         public static async Task Initialize(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             // Create or find users
@@ -12,7 +13,6 @@ namespace WebProject.Data
             {
                 ron = new IdentityUser { UserName = "Ron", Email = "ron@example.com"};
                 var res = await userManager.CreateAsync(ron, "Password123!");
-                var isSuc = res.Succeeded;
             }
             await userManager.AddToRoleAsync(ron, "Visitor");
 
