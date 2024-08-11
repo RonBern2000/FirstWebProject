@@ -11,15 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 string stringZooConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
 string stringUsersConnection = builder.Configuration["ConnectionStrings:UsersConnection"]!;
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Set the expiration time for the cookie
-    options.SlidingExpiration = true; // Reset the expiration time on every request
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
-});
-
 builder.Services.AddDbContext<ZooContext>(options => options.UseLazyLoadingProxies().UseSqlServer(stringZooConnection));// adding the dbContext service and setting up the options to use lazy loading and sqlServer
 
 builder.Services.AddDbContext<UsersContext>(options => options.UseSqlServer(stringUsersConnection));

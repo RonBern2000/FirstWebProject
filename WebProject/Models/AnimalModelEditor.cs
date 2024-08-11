@@ -17,6 +17,7 @@ namespace WebProject.Models
         public int Age { get; set; }
 
         [DisplayName("Animal picture:")]
+        [AllowdFileTypeAndNull([".jpg", ".jpeg", ".png"], ErrorMessage = "Wrong file type(extention)")]
         public IFormFile? Picture { get; set; }
 
         [Required(ErrorMessage = "Please enter a description")]
