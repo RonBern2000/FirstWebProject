@@ -5,6 +5,7 @@ using WebProject.Data;
 using WebProject.Filters;
 using WebProject.Hubs;
 using WebProject.Repository;
+using WebProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 string stringZooConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
@@ -19,6 +20,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 
 builder.Services.AddSignalR();
+
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddAuthorization(options => // Adding authorization policies to be more preciese with who is allowd to do what
 {

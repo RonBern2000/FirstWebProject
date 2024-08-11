@@ -66,13 +66,13 @@ else
                             <p class="card-text">@Model.Animal!.Description</p>
                             <p class="card-text">Age: @Model.Animal!.Age</p>
                             <p class="card-text">Category Name: @Model.Animal!.Category!.Name</p>
-                            <p class="card-text"><small class="text-body-secondary">Number of comments: @Model.Animal!.Comments!.Count</small></p>
+                            <p class="card-text"><small id="commentCount" class="text-body-secondary">Number of comments: @Model.Animal!.Comments!.Count</small></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-4 commentsBox scroll-container">
+        <div id="commentList" class="col-4 commentsBox scroll-container">
             @foreach (var c in Model.Animal!.Comments!)
             {
                 <p>@c.CommentText</p>
@@ -84,13 +84,17 @@ else
             <input type="hidden" asp-for="Comment!.AnimalId" /> @*When submit we also transfer this data*@
             <div class="form-group">
                 <label asp-for="Comment!.CommentText" class="control-label"></label>
-                <textarea asp-for="Comment!.CommentText" class="form-control"></textarea>
+                <textarea id="commentInput" asp-for="Comment!.CommentText" class="form-control"></textarea>
                 <span asp-validation-for="Comment!.CommentText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create a new comment" class="btn btn-primary"/>
+                <input id="addCommentBtn" type="submit" value="Create a new comment" class="btn btn-primary"/>
             </div>
         </form>
     </div>
 </div>
-    
+
+@section scripts{
+    <script src="~/js/signalr.js"></script>
+    <script src="~/js/comment.js"></script>
+}

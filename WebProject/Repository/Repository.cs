@@ -41,5 +41,11 @@ namespace WebProject.Repository
         }
         public async Task<Category> GetCategoryByName(string category) => await _zooContext.Categories!.SingleAsync(c => c.Name == category);
         public Task SaveChangesAsync() => _zooContext.SaveChangesAsync();
+
+        public async Task<IEnumerable<Comment>> GetAnimalComments(int id)
+        {
+            var animal = await _zooContext.Animals!.FirstAsync(a => a.AnimalId.Equals(id));
+            return animal.Comments!;
+        }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using WebProject.Filters;
+using WebProject.Hubs;
 using WebProject.Models;
 using WebProject.Repository;
+using WebProject.Services;
 
 namespace WebProject.Controllers
 {
@@ -13,8 +16,10 @@ namespace WebProject.Controllers
     {
         private readonly IRepository _repository;
         private readonly ILogger<CatalogController> _logger;
-        public CatalogController(IRepository repository, ILogger<CatalogController> logger)
+        private readonly ICommentService _commentService;
+        public CatalogController(IRepository repository, ILogger<CatalogController> logger, ICommentService commentService)
         {
+            _commentService = commentService;
             _repository = repository;
             _logger = logger;
         }
@@ -60,6 +65,10 @@ namespace WebProject.Controllers
                     CommentText = comment.CommentText
                 };
                 await _repository.AddComment(newComment);
+
+                var commentListCount = await _repository.GetAnimalComments(comment.AnimalId);
+
+                await _commentService.SendCommentAsync(newComment.CommentText!, commentListCount.Count());
 
                 return RedirectToAction("AnimalDetails", new { id = comment.AnimalId });
             }

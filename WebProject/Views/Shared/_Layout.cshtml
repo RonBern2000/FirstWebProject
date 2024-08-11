@@ -13,7 +13,7 @@
 <body>
 
      <header>
-        @RenderSection("headerSection") @*A must implement Section*@
+        @await RenderSectionAsync("headerSection") @*A must implement Section*@
      </header>
 
     <main>
@@ -43,6 +43,6 @@
     <script src="~/js/jquery.js"></script>
     <script src="~/js/jquery.validate.min.js"></script>
     <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
-    
+    @await RenderSectionAsync("scripts",false)
 </body>
 </html>

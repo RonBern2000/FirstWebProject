@@ -18,5 +18,6 @@ namespace WebProject.Repository
         public Task AddAnimal(Animal animal);
         public Task RemoveAnimal(Animal animal);
         public Task<Category> GetCategoryByName(string category);
+        public Task<IEnumerable<Comment>> GetAnimalComments(int id);
     }
 }
