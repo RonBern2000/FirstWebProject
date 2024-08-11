@@ -99,27 +99,31 @@ select{
 }
 
 .scroll-container::-webkit-scrollbar {
-        width: 12px;
+    width: 10px;
 }
 
 .scroll-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-        background: #888;
+    background: #71afde;
 }
 
 .scroll-container::-webkit-scrollbar-thumb:hover {
-         background: #555;
+    background: #184161;
 }
 
 .scroll-container::-webkit-scrollbar-button {
-        display: none;
+    display: none;
 }
 
-.card.adminCards img{
-    width: 400px;
+.adminCards{
+    width:18rem
+}
+
+.card.adminCards img {
+    width: 18rem;
 }
 
 .card-body{
@@ -165,7 +169,7 @@ select{
     height: 150px;
 }
 .animalForm div{
-      margin-block:10px;
+    margin-block:10px;
 }
 
 .field-validation-error span{
@@ -186,7 +190,6 @@ select{
 .animalFormContainer > div {
     margin-top: 30px;
 }
-
 
 .animalFormContainer img {
     height: 200px;
