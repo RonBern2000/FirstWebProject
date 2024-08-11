@@ -5,9 +5,9 @@ using WebProject.Models;
 
 namespace WebProject.Data
 {
-    public class UsersContext : IdentityDbContext<IdentityUser>
+    public class UsersContext : IdentityDbContext
     {
-        public UsersContext(DbContextOptions options) : base(options)
+        public UsersContext(DbContextOptions<UsersContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)

@@ -12,7 +12,7 @@ namespace WebProject.Data
             if (ron == null)
             {
                 ron = new IdentityUser { UserName = "Ron", Email = "ron@example.com"};
-                var res = await userManager.CreateAsync(ron, "Password123!");
+                await userManager.CreateAsync(ron, "Password123!");
             }
             await userManager.AddToRoleAsync(ron, "Visitor");
 

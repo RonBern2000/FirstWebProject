@@ -11,11 +11,21 @@ var builder = WebApplication.CreateBuilder(args);
 string stringZooConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
 string stringUsersConnection = builder.Configuration["ConnectionStrings:UsersConnection"]!;
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Set the expiration time for the cookie
+    options.SlidingExpiration = true; // Reset the expiration time on every request
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
+
 builder.Services.AddDbContext<ZooContext>(options => options.UseLazyLoadingProxies().UseSqlServer(stringZooConnection));// adding the dbContext service and setting up the options to use lazy loading and sqlServer
 
 builder.Services.AddDbContext<UsersContext>(options => options.UseSqlServer(stringUsersConnection));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<UsersContext>();
+    .AddEntityFrameworkStores<UsersContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 
@@ -56,6 +66,11 @@ builder.Services.AddScoped<ActionsFilter>();
 
 var app = builder.Build();
 
+if (app.Environment.IsStaging() || app.Environment.IsProduction())
+{
+    app.UseExceptionHandler("/Error/ErrorPage");
+}
+
 using (var scope = app.Services.CreateScope())
 {
     var ctx = scope.ServiceProvider.GetRequiredService<UsersContext>();
@@ -69,11 +84,6 @@ using (var scope = app.Services.CreateScope())
     await SeedData.Initialize(userManager, roleManager);
 }
 
-if (app.Environment.IsStaging() || app.Environment.IsProduction())
-{
-    app.UseExceptionHandler("/Error/ErrorPage");
-}
-
 app.UseStaticFiles(); // For enabling local images
 
 using (var scope = app.Services.CreateScope()) // Reseting the db and filling it up again
@@ -83,9 +93,9 @@ using (var scope = app.Services.CreateScope()) // Reseting the db and filling it
     ctx.Database.EnsureCreated();
 }
 
-app.UseAuthentication();
-
 app.UseRouting(); // using routing 
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -4,7 +4,7 @@ namespace WebProject.Models
 {
     public class UserModel
     {
-        public int UserModelId { get; set; }
+        //public int UserModelId { get; set; }
         [Required]
         public string? Username { get; set; }
         [Required]
