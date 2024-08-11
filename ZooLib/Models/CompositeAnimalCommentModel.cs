@@ -1,4 +1,4 @@
-﻿namespace WebProject.Models
+﻿namespace ZooLib.Models
 {
     public class CompositeAnimalCommentModel
     {

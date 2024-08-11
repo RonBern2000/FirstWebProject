@@ -1,6 +1,6 @@
-﻿using WebProject.Models;
+﻿using ZooLib.Models;
 
-namespace WebProject.Repository
+namespace ZooLib.Repository
 {
     public interface IRepository
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebProject.Data;
-using WebProject.Models;
+using ZooLib.Data;
+using ZooLib.Models;
 
-namespace WebProject.Repository
+namespace ZooLib.Repository
 {
     public class Repository : IRepository
     {

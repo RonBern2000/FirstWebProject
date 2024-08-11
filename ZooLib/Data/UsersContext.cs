@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WebProject.Models;
 
-namespace WebProject.Data
+namespace ZooLib.Data
 {
     public class UsersContext : IdentityDbContext
     {

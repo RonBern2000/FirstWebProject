@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using WebProject.Data;
+using ZooLib.Data;
 using WebProject.Filters;
 using WebProject.Hubs;
-using WebProject.Repository;
+using ZooLib.Repository;
 using WebProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);

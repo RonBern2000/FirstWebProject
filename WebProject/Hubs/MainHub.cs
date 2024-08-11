@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.IO;
 using WebProject.Services;
 
 namespace WebProject.Hubs

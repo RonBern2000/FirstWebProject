@@ -94,7 +94,7 @@ select{
 }
 
 .scroll-container {
-    height: 335px;
+    height: 140px;
     overflow-y: auto;
 }
 

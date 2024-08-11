@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.SignalR;
 using WebProject.Filters;
-using WebProject.Hubs;
-using WebProject.Models;
-using WebProject.Repository;
 using WebProject.Services;
+using ZooLib.Models;
+using ZooLib.Repository;
 
 namespace WebProject.Controllers
 {
@@ -43,10 +41,10 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AnimalDetails(int id) 
+        public async Task<IActionResult> AnimalDetails(int id)
         {
             var animal = await _repository.GetAnimal(id);
-            var compositeAnimalComment = new CompositeAnimalCommentModel() 
+            var compositeAnimalComment = new CompositeAnimalCommentModel()
             {
                 Animal = animal,
                 Comment = new Comment() { AnimalId = animal.AnimalId }
@@ -55,13 +53,13 @@ namespace WebProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateComment(Comment comment) 
+        public async Task<IActionResult> CreateComment(Comment comment)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                var newComment = new Comment() 
+                var newComment = new Comment()
                 {
-                    AnimalId = comment.AnimalId ,
+                    AnimalId = comment.AnimalId,
                     CommentText = comment.CommentText
                 };
                 await _repository.AddComment(newComment);

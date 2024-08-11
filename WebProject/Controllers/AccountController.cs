@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebProject.Filters;
-using WebProject.Models;
+using ZooLib.Models;
 
 namespace WebProject.Controllers
 {

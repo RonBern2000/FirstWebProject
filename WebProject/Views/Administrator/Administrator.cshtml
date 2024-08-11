@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebProject.Models.Animal>
+﻿@model IEnumerable<ZooLib.Models.Animal>
 
 @{
     ViewBag.Title = "Administrator";
@@ -46,7 +46,7 @@
             <img class="card-img-top img-fluid" src="@a.PictureName" alt="animalPic">
             <div class="card-body">
                 <h4 class="card-text">@a.Name</h4>
-                <p class="card-text">@a.Description</p>
+                <p class="card-text scroll-container" style="height: 200px;">@a.Description</p>
                 <p class="card-text">Age: @a.Age</p>
                 <div class="mt-auto">
                     <a class="btn btn-primary" asp-controller="Administrator" asp-action="EditAnimalForm" asp-route-id="@a.AnimalId">Edit</a>

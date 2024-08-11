@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
-namespace WebProject.Validators
+namespace ZooLib.Validators
 {
-    public class AllowdFileTypeAndNullAttribute : ValidationAttribute
+    public class AllowedFileTypeAttribute: ValidationAttribute
     {
         private readonly string[]? _allowedFileType;
 
-        public AllowdFileTypeAndNullAttribute(string[]? allowedFileType)
+        public AllowedFileTypeAttribute(string[]? allowedFileType)
         {
             _allowedFileType = allowedFileType;
         }
@@ -14,14 +15,14 @@ namespace WebProject.Validators
         public override bool IsValid(object? value)
         {
             var file = value as IFormFile;
-            if (file != null)
+            if (file != null) 
             {
                 var extention = Path.GetExtension(file.FileName); // getting the .png/.jpeg whatever it is
-                if (string.IsNullOrEmpty(extention) || Array.IndexOf(_allowedFileType!, extention.ToLower()) < 0)
+                if(string.IsNullOrEmpty(extention) || Array.IndexOf(_allowedFileType!,extention.ToLower()) < 0)
                     return false;
                 return true;
             }
-            return true;
+            return false;
         }
     }
 }

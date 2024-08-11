@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebProject.Filters;
-using WebProject.Repository;
+using ZooLib.Repository;
 
 namespace WebProject.Controllers
 {

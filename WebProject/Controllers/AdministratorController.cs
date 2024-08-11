@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebProject.Filters;
-using WebProject.Models;
-using WebProject.Repository;
+using ZooLib.Models;
+using ZooLib.Repository;
 
 namespace WebProject.Controllers
 {

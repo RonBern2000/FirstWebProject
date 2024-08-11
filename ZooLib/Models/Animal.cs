@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebProject.Models
+namespace ZooLib.Models
 {
     public class Animal
     {

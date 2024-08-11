@@ -1,4 +1,4 @@
-﻿@model WebProject.Models.CompositeAnimalCommentModel
+﻿@model ZooLib.Models.CompositeAnimalCommentModel
 
 @{
     ViewBag.Title = "AnimalDetails";
@@ -63,7 +63,7 @@ else
                     <div class="col-md-12">
                         <div class="card-body">
                             <h5 class="card-title">@Model.Animal!.Name</h5>
-                            <p class="card-text">@Model.Animal!.Description</p>
+                            <p class="card-text scroll-container">@Model.Animal!.Description</p>
                             <p class="card-text">Age: @Model.Animal!.Age</p>
                             <p class="card-text">Category Name: @Model.Animal!.Category!.Name</p>
                             <p class="card-text"><small id="commentCount" class="text-body-secondary">Number of comments: @Model.Animal!.Comments!.Count</small></p>
@@ -72,7 +72,7 @@ else
                 </div>
             </div>
         </div>
-        <div id="commentList" class="col-4 commentsBox scroll-container">
+        <div id="commentList" class="col-4 commentsBox scroll-container" style="height: 350px;">
             @foreach (var c in Model.Animal!.Comments!)
             {
                 <p>@c.CommentText</p>
