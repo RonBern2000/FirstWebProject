@@ -68,7 +68,7 @@ else
     {
         <form asp-controller="Catalog" asp-action="AnimalDetails" method="get">
             <input type="hidden" name="id" asp-for="@a.AnimalId"/>
-            <div class="card" style="width: 18rem;">
+            <div class="card animalCardCatalog" style="width: 18rem;">
                 <img class="card-img-top" src="@a.PictureName" alt="animalPic">
                 <div class="card-body">
                     <h4 class="card-text">@a.Name</h4>
