@@ -6,7 +6,6 @@ namespace WebProject.Services
     public class CommentService : ICommentService
     {
         private readonly IHubContext<MainHub> _hubContext;
-
         public CommentService(IHubContext<MainHub> hubContext)
         {
             _hubContext = hubContext;

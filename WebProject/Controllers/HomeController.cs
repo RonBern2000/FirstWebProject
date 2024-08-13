@@ -19,7 +19,7 @@ namespace WebProject.Controllers
         
         public async Task<IActionResult> Index()
         {
-            var topTwoAnimals = await _repository.Top2Aniamls();
+            var topTwoAnimals = await _repository.Top2Animals();
             return View(topTwoAnimals);
         }
     }

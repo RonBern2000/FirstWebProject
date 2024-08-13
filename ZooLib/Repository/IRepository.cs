@@ -4,7 +4,6 @@ namespace ZooLib.Repository
 {
     public interface IRepository
     {
-        public void SaveChanges();
         public Task SaveChangesAsync();
         Task<IEnumerable<Category>> GetCategories();
         Task<IEnumerable<string>> GetCategoriesNames();
@@ -13,7 +12,7 @@ namespace ZooLib.Repository
         Task<IEnumerable<Animal>> GetAnimals(string category);
         Task<Animal> GetAnimal(int id);
         Task<IEnumerable<Category>> GetAllData();
-        Task<IEnumerable<Animal>> Top2Aniamls();
+        Task<IEnumerable<Animal>> Top2Animals();
         public Task AddComment(Comment comment);
         public Task AddAnimal(Animal animal);
         public Task RemoveAnimal(Animal animal);

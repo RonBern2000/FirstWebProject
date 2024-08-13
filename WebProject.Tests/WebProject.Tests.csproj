@@ -27,10 +27,4 @@
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="FakeRepository\" />
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

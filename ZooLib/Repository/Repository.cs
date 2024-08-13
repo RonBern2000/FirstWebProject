@@ -11,13 +11,13 @@ namespace ZooLib.Repository
         {
             _zooContext = zooContext;
         }
-        public void SaveChanges() => _zooContext.SaveChanges();
+
         public async Task<IEnumerable<Animal>> GetAnimals() => await _zooContext.Animals!.ToListAsync();
         public async Task<IEnumerable<Category>> GetCategories() => await _zooContext.Categories!.ToListAsync();
         public async Task<IEnumerable<string>> GetCategoriesNames() => await _zooContext.Categories!.Select(c => c.Name!).ToListAsync();
         public async Task<IEnumerable<Comment>> GetComments() => await _zooContext.Comments!.ToListAsync();
         public async Task<IEnumerable<Category>> GetAllData() => await _zooContext.Categories!.Include(categorty => categorty.Animals!).ThenInclude(comment => comment.Comments!).ToListAsync();
-        public async Task<IEnumerable<Animal>> Top2Aniamls() => await _zooContext.Animals!
+        public async Task<IEnumerable<Animal>> Top2Animals() => await _zooContext.Animals!
                 .OrderByDescending(a => a.Comments!.Count)
                 .Take(2)
                 .AsNoTracking()
@@ -40,8 +40,7 @@ namespace ZooLib.Repository
             await _zooContext.SaveChangesAsync();
         }
         public async Task<Category> GetCategoryByName(string category) => await _zooContext.Categories!.SingleAsync(c => c.Name == category);
-        public Task SaveChangesAsync() => _zooContext.SaveChangesAsync();
-
+        public async Task SaveChangesAsync() => await _zooContext.SaveChangesAsync();
         public async Task<IEnumerable<Comment>> GetAnimalComments(int id)
         {
             var animal = await _zooContext.Animals!.FirstAsync(a => a.AnimalId.Equals(id));

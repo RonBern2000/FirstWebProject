@@ -49,7 +49,7 @@ builder.Services.AddAuthorization(options => // Adding authorization policies to
             context.User.HasClaim(c => c.Type == "Permission" && c.Value == "Comment")));
 });
 
-builder.Services.AddTransient<IRepository, Repository>(); // adding the Repository service
+builder.Services.AddScoped<IRepository, Repository>(); // adding the Repository service
 
 builder.Host.UseSerilog((ctx, lc) =>
         lc.ReadFrom.Configuration(ctx.Configuration)); // adding logs
