@@ -39,7 +39,7 @@ namespace WebProject.Controllers
                 var res = await _signInManager.PasswordSignInAsync(user.Username!, user.Password!,false,false);
                 if (res.Succeeded)
                 {
-                    var loggedUser = await _userManager.FindByNameAsync(User.Identity!.Name!);
+                    var loggedUser = await _userManager.FindByNameAsync(user.Username!);
                     string jwt = GenerateToken(loggedUser!);
                     CreateCookie(jwt);
                     return RedirectToAction("Index", "Home");
