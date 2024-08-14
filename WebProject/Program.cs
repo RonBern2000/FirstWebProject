@@ -6,6 +6,9 @@ using WebProject.Filters;
 using WebProject.Hubs;
 using ZooLib.Repository;
 using WebProject.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 string stringZooConnection = builder.Configuration["ConnectionStrings:DefaultConnection"]!; // getting the stringConnection from appsettings.json
@@ -24,6 +27,30 @@ builder.Services.AddControllersWithViews(); // Enabling cotrollers and views
 builder.Services.AddSignalR();
 
 builder.Services.AddScoped<ICommentService, CommentService>();
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["jwt:Issuer"],
+        ValidAudience = builder.Configuration["jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration["jwt:Key"]!))
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["JWT"];
+            return Task.CompletedTask;
+        }
+    };
+});
 
 builder.Services.AddAuthorization(options => // Adding authorization policies to be more preciese with who is allowd to do what
 {
@@ -54,6 +81,7 @@ builder.Services.AddScoped<IRepository, Repository>(); // adding the Repository 
 
 builder.Host.UseSerilog((ctx, lc) =>
         lc.ReadFrom.Configuration(ctx.Configuration)); // adding logs
+
 builder.Services.AddScoped<ActionsFilter>();
 
 var app = builder.Build();
