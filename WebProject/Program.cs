@@ -14,6 +14,7 @@ string stringUsersConnection = builder.Configuration["ConnectionStrings:UsersCon
 builder.Services.AddDbContext<ZooContext>(options => options.UseLazyLoadingProxies().UseSqlServer(stringZooConnection));// adding the dbContext service and setting up the options to use lazy loading and sqlServer
 
 builder.Services.AddDbContext<UsersContext>(options => options.UseSqlServer(stringUsersConnection));
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<UsersContext>()
     .AddDefaultTokenProviders();
