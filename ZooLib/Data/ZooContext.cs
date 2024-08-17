@@ -36,7 +36,17 @@ namespace ZooLib.Data
                 new Comment { CommentId = 5, CommentText = "He is tall!", AnimalId = 4 },
                 new Comment { CommentId = 6, CommentText = "He is strong!", AnimalId = 5 },
                 new Comment { CommentId = 7, CommentText = "He is quiet!", AnimalId = 6 },
-                new Comment { CommentId = 8, CommentText = "He is shy!", AnimalId = 6 }
+                new Comment { CommentId = 8, CommentText = "He is shy!", AnimalId = 6 },
+                new Comment { CommentId = 9, CommentText = "He is playful!", AnimalId = 1 },
+                new Comment { CommentId = 10, CommentText = "He is sleepy!", AnimalId = 2 },
+                new Comment { CommentId = 11, CommentText = "He is fast!", AnimalId = 3 },
+                new Comment { CommentId = 12, CommentText = "He is clever!", AnimalId = 4 },
+                new Comment { CommentId = 13, CommentText = "He is curious!", AnimalId = 5 },
+                new Comment { CommentId = 14, CommentText = "He is loyal!", AnimalId = 6 },
+                new Comment { CommentId = 15, CommentText = "He is gentle!", AnimalId = 1 },
+                new Comment { CommentId = 16, CommentText = "He is fierce!", AnimalId = 2 },
+                new Comment { CommentId = 17, CommentText = "He is energetic!", AnimalId = 3 },
+                new Comment { CommentId = 18, CommentText = "He is brave!", AnimalId = 4 }
                 );
         }
     }
