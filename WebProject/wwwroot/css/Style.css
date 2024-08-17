@@ -1,7 +1,12 @@
 ﻿body {
-    font-size: 1.5rem;
-    background: #212529;
+    font-size: 1rem;
+    background-color: #212529;
     margin: 0;
+    color:white;
+}
+
+header{
+    font-size:2rem;
 }
 
 .logo{
@@ -9,21 +14,37 @@
 }
 
 .animalPhoto{
-    width: 700px;
-    height: 400px;
+    width: 500px;
+    height: 275px;
 }
 
-.card.mb-3{
-    width: 80vw;
+.card {
+    background: #adc0de;
+    box-shadow: 5px 5px 10px 5px #2f5aa1;
+}
+
+#formCategory{
+    margin:30px 0 0 0;
+}
+
+#catalogContent {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.card-img-top{
+    width:286px;
+    height:184px;
 }
 
 .row.g-0 {
     background: #adc0de;
-    box-shadow: 5px  5px 10px 5px #2f5aa1
+    box-shadow: 5px 5px 10px 5px #2f5aa1
 }
 
 .mainContent {
-    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,8 +55,161 @@
     font-size:2.5rem;
 }
 
-.popularhead {
+.popularhead{
     font-size: 4rem;
     text-shadow: 5px 5px #2f5aa1;
     padding: 10px;
+}
+
+select{
+    max-width: 400px;
+}
+
+.selectedAnimal{
+    margin: 40px;
+}
+
+.commentsBox{
+    background-color: #adc0de;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.commentsBox p {
+     word-wrap: break-word;
+     overflow-wrap: break-word;
+     white-space: normal;
+     display: block;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     border: solid 3px #212529;
+     padding: 15px;
+     border-radius: 50px;
+     background: #354f69;
+}
+
+.commentsBox p:not(:first-of-type){
+    margin-top: 4px;
+}
+
+.scroll-container {
+    height: 140px;
+    overflow-y: auto;
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #71afde;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #184161;
+}
+
+.scroll-container::-webkit-scrollbar-button {
+    display: none;
+}
+
+.adminCards{
+    width:18rem
+}
+
+.card.adminCards img {
+    width: 18rem;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .mt-auto{
+    margin-bottom: 0;
+}
+
+.categoryAndCreateBtn{
+    display:flex;
+    gap: 20px;
+}
+.categoryAndCreateBtn a{
+    height: 38px;
+    margin-top: 30px;
+    text-align:center;
+}
+
+.confirmDelete{
+    background-color: #8a4248;
+    border-radius: 15px;
+    margin-top: 20px;
+    padding: 15px;
+    box-shadow: 0px 0px 20px 1px red;
+}
+.confirmDelete p{
+    font-size: 1.25rem;
+    color: black;
+    font-weight:600;
+}
+
+.confirmBtns{
+    margin-top: 5px;
+}
+
+.animalForm{
+    width: 500px;
+}
+.animalForm textarea{
+    height: 150px;
+}
+.animalForm div{
+    margin-block:10px;
+}
+
+.field-validation-error span{
+    color:red;
+    font-size: 15px;
+}
+
+#logOut{
+    margin-right: 30px;
+    font-size: 1.25rem;
+}
+
+.animalFormContainer{
+    display:flex;
+    gap: 30px;
+}
+
+.animalFormContainer > div {
+    margin-top: 30px;
+}
+
+.animalFormContainer img {
+    height: 200px;
+    width: 300px;
+    border-radius: 15px;
+}
+
+.animalCardCatalog {
+    transition-duration: 0.35s;
+}
+
+.animalCardCatalog:hover {
+    transform: scale(1.08);
+}
+
+@media only screen and (max-width: 768px) {
+    .categoryAndCreateBtn {
+        flex-direction: column;
+    }
+    .animalForm{
+        width: 300px;
+    }
 }

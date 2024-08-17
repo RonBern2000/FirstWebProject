@@ -1,8 +1,12 @@
-﻿namespace WebProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ZooLib.Models
 {
     public class Animal
     {
         public int AnimalId { get; set; }
+
+        [Required(ErrorMessage = "Please enter a valid Name")]
         public string? Name { get; set; }
         public int Age { get; set; }
         public string? PictureName { get; set; }

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<ZooLib.Models.Animal>
+﻿@model ZooLib.Models.CompositeAnimalCommentModel
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "AnimalDetails";
 }
 @if ((await AuthorizationService.AuthorizeAsync(User, "ManageUsersAndContentPolicy")).Succeeded)
 {
@@ -15,10 +15,10 @@
                 <div class="navbar-brand col-lg-3 me-0"><a asp-controller="Home" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a></div>
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
                     <li class="nav-item">
-                        <a class="nav-link active" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">Catalog</a>
+                        <a class="nav-link active" asp-action="Catalog">Catalog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Administrator" asp-action="Administrator">Administrator</a>
@@ -42,10 +42,10 @@ else
                 <div class="navbar-brand col-lg-3 me-0"><a asp-controller="Home" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a></div>
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
                     <li class="nav-item">
-                        <a class="nav-link active" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">Catalog</a>
+                        <a class="nav-link active" asp-action="Catalog">Catalog</a>
                     </li>
                 </ul>
             </div>
@@ -55,22 +55,46 @@ else
     }
 }
 
-
-<h2 class="popularhead" style="color:white;">Our two most popular animals:</h2>
-@foreach(var a in Model)
-{
-    <div class="card mb-3 w-75">
-        <div class="row g-0">
-            <div class="col-md-3">
-                <img src="@a.PictureName" class="img-fluid rounded-start animalPhoto" alt="AnimalPhoto">
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <h5 class="card-title">@a.Name</h5>
-                    <p class="card-text scroll-container">@a.Description</p>
-                    <p class="card-text"><small class="text-body-secondary">Number of comments: @a.Comments!.Count</small></p>
+<div class="container selectedAnimal">
+    <div class="row">
+        <div class="col-8">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Animal!.Name</h5>
+                            <p class="card-text scroll-container">@Model.Animal!.Description</p>
+                            <p class="card-text">Age: @Model.Animal!.Age</p>
+                            <p class="card-text">Category Name: @Model.Animal!.Category!.Name</p>
+                            <p class="card-text"><small id="commentCount" class="text-body-secondary">Number of comments: @Model.Animal!.Comments!.Count</small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div id="commentList" class="col-4 commentsBox scroll-container" style="height: 350px;">
+            @foreach (var c in Model.Animal!.Comments!)
+            {
+                <p>@c.CommentText</p>
+            }
+        </div>
     </div>
+    <div class="row">
+        <form asp-action="CreateComment" method="post">
+            <input type="hidden" asp-for="Comment!.AnimalId" /> @*When submit we also transfer this data*@
+            <div class="form-group">
+                <label asp-for="Comment!.CommentText" class="control-label"></label>
+                <textarea id="commentInput" asp-for="Comment!.CommentText" class="form-control"></textarea>
+                <span asp-validation-for="Comment!.CommentText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="addCommentBtn" type="submit" value="Create a new comment" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/signalr.js"></script>
+    <script src="~/js/comment.js"></script>
 }

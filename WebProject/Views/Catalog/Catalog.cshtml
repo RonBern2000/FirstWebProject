@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ZooLib.Models.Animal>
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "Catalog";
 }
 @if ((await AuthorizationService.AuthorizeAsync(User, "ManageUsersAndContentPolicy")).Succeeded)
 {
@@ -15,10 +15,10 @@
                 <div class="navbar-brand col-lg-3 me-0"><a asp-controller="Home" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a></div>
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
                     <li class="nav-item">
-                        <a class="nav-link active" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">Catalog</a>
+                        <a class="nav-link active" asp-action="Catalog">Catalog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Administrator" asp-action="Administrator">Administrator</a>
@@ -42,10 +42,10 @@ else
                 <div class="navbar-brand col-lg-3 me-0"><a asp-controller="Home" asp-action="Index"><img class="logo" src="/images/ZooIcon.png" alt="logo" /></a></div>
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center" style="gap:30px;">
                     <li class="nav-item">
-                        <a class="nav-link active" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">Catalog</a>
+                        <a class="nav-link active" asp-action="Catalog">Catalog</a>
                     </li>
                 </ul>
             </div>
@@ -56,21 +56,25 @@ else
 }
 
 
-<h2 class="popularhead" style="color:white;">Our two most popular animals:</h2>
-@foreach(var a in Model)
-{
-    <div class="card mb-3 w-75">
-        <div class="row g-0">
-            <div class="col-md-3">
-                <img src="@a.PictureName" class="img-fluid rounded-start animalPhoto" alt="AnimalPhoto">
-            </div>
-            <div class="col-md-9">
+<div id="formCategory" style="margin:30px 0 0 0;width: 300px">
+    @using (Html.BeginForm("RedirectToCatalog", "Catalog", FormMethod.Post))
+    {
+        @Html.DropDownList("category", ViewBag.Categories, "Select Category", new { @class = "form-control", @onchange = "this.form.submit();" })
+    }
+</div>
+
+<div id="catalogContent">
+    @foreach (var a in Model)
+    {
+        <form asp-controller="Catalog" asp-action="AnimalDetails" method="get">
+            <input type="hidden" name="id" asp-for="@a.AnimalId"/>
+            <div class="card animalCardCatalog" style="width: 18rem;">
+                <img class="card-img-top" src="@a.PictureName" alt="animalPic">
                 <div class="card-body">
-                    <h5 class="card-title">@a.Name</h5>
-                    <p class="card-text scroll-container">@a.Description</p>
-                    <p class="card-text"><small class="text-body-secondary">Number of comments: @a.Comments!.Count</small></p>
+                    <h4 class="card-text">@a.Name</h4>
+                    <input class="btn btn-primary" type="submit" value="Details" />
                 </div>
             </div>
-        </div>
-    </div>
-}
+        </form>
+    }
+</div>
